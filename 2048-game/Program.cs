@@ -1,4 +1,5 @@
-﻿internal class Program
+﻿// kto legenda kto chempion
+internal class Program
 {
     private static void Main(string[] args)
     {
