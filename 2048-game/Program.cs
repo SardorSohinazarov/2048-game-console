@@ -306,48 +306,53 @@ internal class Program
         return array;
     }
 
+    public static int[,] MoveTop(int[,] array)
+    {
+        int size = array.GetLength(0);
 
-
-    /*    public static int[,] MoveRight(int[,] board)
+        for (int col = 0; col < size; col++)
         {
-            for (int row = 0; row < 4; row++)
+            int pointer = 0;
+
+            for (int row = 1; row < size; row++)
             {
-                List<int> values = new List<int>();
-                for (int col = 3; col >= 0; col--)
+                if (array[row, col] != 0)
                 {
-                    if (board[row, col] != 0)
-                    {
-                        values.Add(board[row, col]);
-                    }
-                }
+                    int currentTile = array[row, col];
+                    int nextTile = array[row - 1, col];
 
-                for (int i = 0; i < values.Count - 1; i++)
-                {
-                    if (values[i] == values[i + 1])
+                    if (nextTile == 0 || nextTile == currentTile)
                     {
-                        values[i] *= 2;
-                        values[i + 1] = 0;
-                    }
-                }
-
-                values.RemoveAll(val => val == 0);
-
-                for (int col = 3; col >= 0; col--)
-                {
-                    if (3 - col < values.Count)
-                    {
-                        board[row, col] = values[values.Count - 1 - (3 - col)];
+                        if (array[pointer, col] == currentTile)
+                        {
+                            array[pointer, col] *= 2;
+                            array[row, col] = 0;
+                        }
+                        else
+                        {
+                            if (array[pointer, col] == 0)
+                            {
+                                array[pointer, col] = currentTile;
+                                array[row, col] = 0;
+                            }
+                            else
+                            {
+                                array[++pointer, col] = currentTile;
+                                array[row, col] = 0;
+                            }
+                        }
                     }
                     else
                     {
-                        board[row, col] = 0;
+                        pointer++;
                     }
                 }
             }
-
-            return board;
         }
-    */
+
+        return array;
+    }
+
 
     public static int RandomNumber()
     {
