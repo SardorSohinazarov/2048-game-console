@@ -353,6 +353,52 @@ internal class Program
         return array;
     }
 
+    public static int[,] MoveDown(int[,] array)
+    {
+        int size = array.GetLength(0);
+
+        for (int col = 0; col < size; col++)
+        {
+            int pointer = size - 1;
+
+            for (int row = size - 2; row >= 0; row--)
+            {
+                if (array[row, col] != 0)
+                {
+                    int currentTile = array[row, col];
+                    int nextTile = array[row + 1, col];
+
+                    if (nextTile == 0 || nextTile == currentTile)
+                    {
+                        if (array[pointer, col] == currentTile)
+                        {
+                            array[pointer, col] *= 2;
+                            array[row, col] = 0;
+                        }
+                        else
+                        {
+                            if (array[pointer, col] == 0)
+                            {
+                                array[pointer, col] = currentTile;
+                                array[row, col] = 0;
+                            }
+                            else
+                            {
+                                array[--pointer, col] = currentTile;
+                                array[row, col] = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        pointer--;
+                    }
+                }
+            }
+        }
+
+        return array;
+    }
 
     public static int RandomNumber()
     {
