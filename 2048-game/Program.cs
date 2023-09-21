@@ -16,7 +16,7 @@ internal class Program
         }
         else if (key.Key == ConsoleKey.LeftArrow)
         {
-            //MoveToTop(array);
+            array2048 = MoveLeft(array2048);
         }
         else if (key.Key == ConsoleKey.RightArrow)
         {
@@ -259,20 +259,20 @@ internal class Program
         return true;
     }
 
-    public static int[,] MoveRight(int[,] array)
+    public static int[,] MoveLeft(int[,] array)
     {
-        int size = 4; // Assuming a 4x4 array
+        int size = array.GetLength(0);
 
         for (int row = 0; row < size; row++)
         {
-            int pointer = size - 1;
+            int pointer = 0;
 
-            for (int col = size - 2; col >= 0; col--)
+            for (int col = 1; col < size; col++)
             {
                 if (array[row, col] != 0)
                 {
                     int currentTile = array[row, col];
-                    int nextTile = array[row, col + 1];
+                    int nextTile = array[row, col - 1];
 
                     if (nextTile == 0 || nextTile == currentTile)
                     {
@@ -290,14 +290,14 @@ internal class Program
                             }
                             else
                             {
-                                array[row, --pointer] = currentTile;
+                                array[row, ++pointer] = currentTile;
                                 array[row, col] = 0;
                             }
                         }
                     }
                     else
                     {
-                        pointer--;
+                        pointer++;
                     }
                 }
             }
