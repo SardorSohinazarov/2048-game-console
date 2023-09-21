@@ -15,7 +15,7 @@
         }
         else if (key.Key == ConsoleKey.LeftArrow)
         {
-            //MoveToTop(array);
+            array2048 = MoveLeft(array2048);
         }
         else if (key.Key == ConsoleKey.RightArrow)
         {
@@ -258,9 +258,57 @@
         return true;
     }
 
+    public static int[,] MoveLeft(int[,] array)
+    {
+        int size = array.GetLength(0);
+
+        for (int row = 0; row < size; row++)
+        {
+            int pointer = 0;
+
+            for (int col = 1; col < size; col++)
+            {
+                if (array[row, col] != 0)
+                {
+                    int currentTile = array[row, col];
+                    int nextTile = array[row, col - 1];
+
+                    if (nextTile == 0 || nextTile == currentTile)
+                    {
+                        if (array[row, pointer] == currentTile)
+                        {
+                            array[row, pointer] *= 2;
+                            array[row, col] = 0;
+                        }
+                        else
+                        {
+                            if (array[row, pointer] == 0)
+                            {
+                                array[row, pointer] = currentTile;
+                                array[row, col] = 0;
+                            }
+                            else
+                            {
+                                array[row, ++pointer] = currentTile;
+                                array[row, col] = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        pointer++;
+                    }
+                }
+            }
+        }
+
+        return array;
+    }
+
+
     public static int[,] MoveRight(int[,] array)
     {
-        int size = 4; // Assuming a 4x4 array
+        int size = 4;
 
         for (int row = 0; row < size; row++)
         {
@@ -304,49 +352,6 @@
 
         return array;
     }
-
-
-
-    /*    public static int[,] MoveRight(int[,] board)
-        {
-            for (int row = 0; row < 4; row++)
-            {
-                List<int> values = new List<int>();
-                for (int col = 3; col >= 0; col--)
-                {
-                    if (board[row, col] != 0)
-                    {
-                        values.Add(board[row, col]);
-                    }
-                }
-
-                for (int i = 0; i < values.Count - 1; i++)
-                {
-                    if (values[i] == values[i + 1])
-                    {
-                        values[i] *= 2;
-                        values[i + 1] = 0;
-                    }
-                }
-
-                values.RemoveAll(val => val == 0);
-
-                for (int col = 3; col >= 0; col--)
-                {
-                    if (3 - col < values.Count)
-                    {
-                        board[row, col] = values[values.Count - 1 - (3 - col)];
-                    }
-                    else
-                    {
-                        board[row, col] = 0;
-                    }
-                }
-            }
-
-            return board;
-        }
-    */
 
     public static int RandomNumber()
     {
